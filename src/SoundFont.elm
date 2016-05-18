@@ -9,11 +9,11 @@ import Task
 import SoundFontPorts exposing (..)
 import SoundFontTypes exposing (..)
 
-main = 
+main =
   Html.program
     { init = (init, Cmd.none), update = update, view = view, subscriptions = subscriptions }
 
-type Msg = 
+type Msg =
     InitialiseAudioContext
   | ResponseAudioContext AudioContext
   | RequestOggEnabled
@@ -24,20 +24,20 @@ type Msg =
   | NoOp
 
 
-type alias Model = 
-  { 
+type alias Model =
+  {
     audioContext : Maybe AudioContext
   , oggEnabled : Bool
   , fontsLoaded : Bool
   }
 
 init =
-  Model Nothing False False 
+  Model Nothing False False
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
-  case msg of 
-    InitialiseAudioContext -> 
+  case msg of
+    InitialiseAudioContext ->
       ( model
       , initialiseAudioContext ()
       )
@@ -45,7 +45,7 @@ update msg model =
       ( { model | audioContext = Just context }
       , Cmd.none
       )
-    RequestOggEnabled -> 
+    RequestOggEnabled ->
       ( model
       , requestIsOggEnabled ()
       )
@@ -53,7 +53,7 @@ update msg model =
       ( { model | oggEnabled = enabled }
       , Cmd.none
       )
-    RequestLoadFonts -> 
+    RequestLoadFonts ->
       ( model
       , requestLoadFonts ()
       )
@@ -61,7 +61,7 @@ update msg model =
       ( { model | fontsLoaded = loaded }
       , Cmd.none
       )
-    RequestPlayNote note -> 
+    RequestPlayNote note ->
       ( model
       , requestPlayNote note
       )
@@ -110,7 +110,7 @@ viewEnabled m =
       else
         "no"
   in
-     text ("audio enabled: " ++ audio ++ " ogg enabled: " ++ ogg ++ " fonts loaded: " ++ fonts  )  
+     text ("audio enabled: " ++ audio ++ " ogg enabled: " ++ ogg ++ " fonts loaded: " ++ fonts  )
 
 
 view : Model -> Html Msg
@@ -136,14 +136,14 @@ view model =
 viewLoadFontButton: Model -> Html Msg
 viewLoadFontButton model =
   case (model.audioContext) of
-    Just ac -> 
+    Just ac ->
       button
         [
           onClick RequestLoadFonts
         , id "elm-load-font-button"
         , btnStyle
         ] [ text "load soundfonts" ]
-    _ -> 
+    _ ->
        div [] []
 
 viewPlayNoteButton: Model -> Html Msg
@@ -151,10 +151,10 @@ viewPlayNoteButton model =
   if (model.fontsLoaded) then
     button
         [
-          onClick (RequestPlayNote (MidiNote 60 1.0 1.0))
+          onClick (RequestPlayNote (MidiNote 60 0.0 1.0))
         , id "elm-play-note-button"
         , btnStyle
-        ] [ text "play sample note" ]  
+        ] [ text "play sample note" ]
   else
     div [] []
 
@@ -163,8 +163,7 @@ viewPlayNoteButton model =
 btnStyle : Attribute msg
 btnStyle =
   style
-    [ 
+    [
       ("font-size", "1em")
     , ("text-align", "center")
     ]
-
