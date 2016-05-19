@@ -21,6 +21,7 @@ type Msg =
   | RequestLoadFonts
   | ResponseFontsLoaded Bool
   | RequestPlayNote MidiNote
+  | RequestPlayNoteSequence (List MidiNote)
   | NoOp
 
 
@@ -64,6 +65,10 @@ update msg model =
     RequestPlayNote note ->
       ( model
       , requestPlayNote note
+      )
+    RequestPlayNoteSequence notes ->
+      ( model
+      , requestPlayNoteSequence notes
       )
     NoOp ->
       ( model, Cmd.none )
@@ -130,6 +135,7 @@ view model =
         ] [ text "check ogg enabled" ]
     , viewLoadFontButton model
     , viewPlayNoteButton model
+    , viewPlayNoteSequenceButton model
     ,  div [] [ viewEnabled model ]
     ]
 
@@ -157,6 +163,31 @@ viewPlayNoteButton model =
         ] [ text "play sample note" ]
   else
     div [] []
+
+viewPlayNoteSequenceButton: Model -> Html Msg
+viewPlayNoteSequenceButton model =
+  let
+    sequence =
+      [ (MidiNote 60 0.0 1.0)
+      , (MidiNote 62 0.3 1.0)
+      , (MidiNote 64 0.6 1.0)
+      , (MidiNote 65 0.9 1.0)
+      , (MidiNote 67 1.2 1.0)
+      , (MidiNote 69 1.5 1.0)
+      , (MidiNote 71 1.8 1.0)
+      , (MidiNote 72 2.1 1.0)
+      ]
+  in
+    if (model.fontsLoaded) then
+      button
+        [
+          onClick (RequestPlayNoteSequence sequence)
+        , id "elm-play-note-sequence-button"
+        , btnStyle
+        ] [ text "play sample scale" ]
+    else
+      div [] []
+
 
 
 

@@ -7455,6 +7455,14 @@ var _newlandsvalley$elm_soundfont_ports$SoundFontPorts$requestPlayNote = _elm_la
 	function (v) {
 		return {id: v.id, timeOffset: v.timeOffset, gain: v.gain};
 	});
+var _newlandsvalley$elm_soundfont_ports$SoundFontPorts$requestPlayNoteSequence = _elm_lang$core$Native_Platform.outgoingPort(
+	'requestPlayNoteSequence',
+	function (v) {
+		return _elm_lang$core$Native_List.toArray(v).map(
+			function (v) {
+				return {id: v.id, timeOffset: v.timeOffset, gain: v.gain};
+			});
+	});
 var _newlandsvalley$elm_soundfont_ports$SoundFontPorts$getAudioContext = _elm_lang$core$Native_Platform.incomingPort(
 	'getAudioContext',
 	A2(
@@ -7570,6 +7578,12 @@ var _newlandsvalley$elm_soundfont_ports$SoundFont$update = F2(
 					_0: model,
 					_1: _newlandsvalley$elm_soundfont_ports$SoundFontPorts$requestPlayNote(_p1._0)
 				};
+			case 'RequestPlayNoteSequence':
+				return {
+					ctor: '_Tuple2',
+					_0: model,
+					_1: _newlandsvalley$elm_soundfont_ports$SoundFontPorts$requestPlayNoteSequence(_p1._0)
+				};
 			default:
 				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 		}
@@ -7580,6 +7594,40 @@ var _newlandsvalley$elm_soundfont_ports$SoundFont$Model = F3(
 	});
 var _newlandsvalley$elm_soundfont_ports$SoundFont$init = A3(_newlandsvalley$elm_soundfont_ports$SoundFont$Model, _elm_lang$core$Maybe$Nothing, false, false);
 var _newlandsvalley$elm_soundfont_ports$SoundFont$NoOp = {ctor: 'NoOp'};
+var _newlandsvalley$elm_soundfont_ports$SoundFont$RequestPlayNoteSequence = function (a) {
+	return {ctor: 'RequestPlayNoteSequence', _0: a};
+};
+var _newlandsvalley$elm_soundfont_ports$SoundFont$viewPlayNoteSequenceButton = function (model) {
+	var sequence = _elm_lang$core$Native_List.fromArray(
+		[
+			A3(_newlandsvalley$elm_soundfont_ports$SoundFontTypes$MidiNote, 60, 0.0, 1.0),
+			A3(_newlandsvalley$elm_soundfont_ports$SoundFontTypes$MidiNote, 62, 0.3, 1.0),
+			A3(_newlandsvalley$elm_soundfont_ports$SoundFontTypes$MidiNote, 64, 0.6, 1.0),
+			A3(_newlandsvalley$elm_soundfont_ports$SoundFontTypes$MidiNote, 65, 0.9, 1.0),
+			A3(_newlandsvalley$elm_soundfont_ports$SoundFontTypes$MidiNote, 67, 1.2, 1.0),
+			A3(_newlandsvalley$elm_soundfont_ports$SoundFontTypes$MidiNote, 69, 1.5, 1.0),
+			A3(_newlandsvalley$elm_soundfont_ports$SoundFontTypes$MidiNote, 71, 1.8, 1.0),
+			A3(_newlandsvalley$elm_soundfont_ports$SoundFontTypes$MidiNote, 72, 2.1, 1.0)
+		]);
+	return model.fontsLoaded ? A2(
+		_elm_lang$html$Html$button,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Events$onClick(
+				_newlandsvalley$elm_soundfont_ports$SoundFont$RequestPlayNoteSequence(sequence)),
+				_elm_lang$html$Html_Attributes$id('elm-play-note-sequence-button'),
+				_newlandsvalley$elm_soundfont_ports$SoundFont$btnStyle
+			]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html$text('play sample scale')
+			])) : A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		_elm_lang$core$Native_List.fromArray(
+			[]));
+};
 var _newlandsvalley$elm_soundfont_ports$SoundFont$RequestPlayNote = function (a) {
 	return {ctor: 'RequestPlayNote', _0: a};
 };
@@ -7681,6 +7729,7 @@ var _newlandsvalley$elm_soundfont_ports$SoundFont$view = function (model) {
 					])),
 				_newlandsvalley$elm_soundfont_ports$SoundFont$viewLoadFontButton(model),
 				_newlandsvalley$elm_soundfont_ports$SoundFont$viewPlayNoteButton(model),
+				_newlandsvalley$elm_soundfont_ports$SoundFont$viewPlayNoteSequenceButton(model),
 				A2(
 				_elm_lang$html$Html$div,
 				_elm_lang$core$Native_List.fromArray(

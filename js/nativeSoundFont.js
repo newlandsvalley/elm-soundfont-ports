@@ -25,7 +25,7 @@ function loadSoundFonts() {
     else {
       extension = '-mp3.js'
     }    
-    Soundfont.nameToUrl = function (name) { return 'soundfonts/' + name + '-mp3.js' }
+    Soundfont.nameToUrl = function (name) { return 'soundfonts/' + name + extension }
     Soundfont.loadBuffers(myapp.context, name)
         .then(function (buffers) {
           console.log("buffers:", buffers)
@@ -49,6 +49,14 @@ function playMidiNote(midiNote) {
   gainNode.connect(myapp.context.destination)
   source.start(time);
 };
+
+myapp.ports.requestPlayNoteSequence.subscribe(playMidiNoteSequence);
+
+/* play a sequence of midi notes */
+function playMidiNoteSequence(midiNotes) {
+  console.log("play sequence");
+  midiNotes.map(playMidiNote);
+}
 
 /* IMPLEMENTATION */
 
