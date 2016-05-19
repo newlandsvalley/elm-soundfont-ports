@@ -19,7 +19,13 @@ myapp.ports.requestLoadFonts.subscribe(loadSoundFonts);
 function loadSoundFonts() {
     myapp.context = getAudioContext();
     name = 'acoustic_grand_piano'
-    Soundfont.nameToUrl = function (name) { return 'soundfonts/' + name + '-ogg.js' }
+    if (canPlayOgg()) {
+      extension = '-ogg.js'
+    }
+    else {
+      extension = '-mp3.js'
+    }    
+    Soundfont.nameToUrl = function (name) { return 'soundfonts/' + name + '-mp3.js' }
     Soundfont.loadBuffers(myapp.context, name)
         .then(function (buffers) {
           console.log("buffers:", buffers)
@@ -32,7 +38,7 @@ myapp.ports.requestPlayNote.subscribe(playMidiNote);
 
 /* play a midi note */
 function playMidiNote(midiNote) {
-  console.log("playing buffer at time: " + midiNote.timeOffset + " with gain: " + midiNote.gain + " for note" + midiNote.id)
+  console.log("playing buffer at time: " + midiNote.timeOffset + " with gain: " + midiNote.gain + " for note: " + midiNote.id)
   var buffer = myapp.buffers[midiNote.id]
   var source = myapp.context.createBufferSource();
   var gainNode = myapp.context.createGain();
@@ -55,11 +61,11 @@ getAudioContext = function() {
 canPlayOgg = function() {
   var audioTester = document.createElement("audio");
   if (audioTester.canPlayType('audio/ogg')) {
-    console.log("browser supports ogg");
+    /* console.log("browser supports ogg"); */
     return true;
   }
   else {
-    console.log("browser does not support ogg");
+    /* console.log("browser does not support ogg"); */
     return false;
   }
 }
