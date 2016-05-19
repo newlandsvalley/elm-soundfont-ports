@@ -1,5 +1,3 @@
-var myapp = Elm.SoundFont.embed(node);
-
 myapp.ports.initialiseAudioContext.subscribe(detectAudioContext);
 
 function detectAudioContext() {
