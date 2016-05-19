@@ -6,24 +6,14 @@ import Html.Events exposing (on, onClick)
 import Html.App as Html
 import String
 import Task
-import SoundFontPorts exposing (..)
-import SoundFontTypes exposing (..)
+import SoundFont.Ports exposing (..)
+import SoundFont.Types exposing (..)
+import SoundFont.Msg exposing (..)
+import SoundFont.Subscriptions exposing (..)
 
 main =
   Html.program
     { init = (init, Cmd.none), update = update, view = view, subscriptions = subscriptions }
-
-type Msg =
-    InitialiseAudioContext
-  | ResponseAudioContext AudioContext
-  | RequestOggEnabled
-  | ResponseOggEnabled Bool
-  | RequestLoadFonts
-  | ResponseFontsLoaded Bool
-  | RequestPlayNote MidiNote
-  | RequestPlayNoteSequence (List MidiNote)
-  | NoOp
-
 
 type alias Model =
   {
@@ -74,26 +64,10 @@ update msg model =
       ( model, Cmd.none )
 
 
-
-
 -- SUBSCRIPTIONS
-
-audioContextSub : Sub Msg
-audioContextSub =
-  getAudioContext ResponseAudioContext
-
-oggEnabledSub : Sub Msg
-oggEnabledSub  =
-  oggEnabled ResponseOggEnabled
-
-fontsLoadedSub : Sub Msg
-fontsLoadedSub  =
-  fontsLoaded ResponseFontsLoaded
-
 subscriptions : Model -> Sub Msg
 subscriptions model
   = Sub.batch [audioContextSub, oggEnabledSub, fontsLoadedSub]
-
 
 -- VIEW
 
@@ -187,9 +161,6 @@ viewPlayNoteSequenceButton model =
         ] [ text "play sample scale" ]
     else
       div [] []
-
-
-
 
 btnStyle : Attribute msg
 btnStyle =

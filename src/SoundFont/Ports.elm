@@ -1,7 +1,7 @@
-port module SoundFontPorts exposing (..)
+port module SoundFont.Ports exposing (..)
 
 
-import SoundFontTypes exposing (..)
+import SoundFont.Types exposing (..)
 
 -- outgoing ports (for commands to javascript)
 

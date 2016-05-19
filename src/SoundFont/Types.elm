@@ -1,4 +1,4 @@
-module SoundFontTypes exposing (..)
+module SoundFont.Types exposing (..)
 
 type alias AudioNode = 
   {
