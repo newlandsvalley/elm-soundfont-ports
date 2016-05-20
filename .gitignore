@@ -3,5 +3,4 @@ elm.js
 Main.html
 index.html
 /deprecated/
-js/elmSoundFont.js
-examples
+examples/distjs/*.js

@@ -13,7 +13,7 @@ port requestLoadFonts : () -> Cmd msg
 
 port requestPlayNote : MidiNote -> Cmd msg
 
-port requestPlayNoteSequence : List MidiNote -> Cmd msg
+port requestPlayNoteSequence : MidiNotes -> Cmd msg
 
 
 -- incoming ports (for subscriptions from javascript)

@@ -1,5 +1,17 @@
 module SoundFont.Types exposing (..)
 
+{- 
+Types that are shared between elm and javascript.
+
+This is partly experimental - to see what elm's custom and borders protection actually does.
+It seems that if you mention an object field's name in an elm type, it will be accepted as long
+as its type is supported.  If you don't mention a name, then it will be ignored.
+
+This means that javascript types with binary fields are effectively useless if you want to store them
+in elm and pass them back to javascript later via another port.  Notice that AudioNode is the empty tuple.
+-}
+
+{-| Audio Node -}
 type alias AudioNode = 
   {
   }
@@ -18,4 +30,8 @@ type alias MidiNote =
   , timeOffset : Float
   , gain : Float
   }
+
+{-| Midi Notes -}
+type alias MidiNotes =
+  List MidiNote
 
