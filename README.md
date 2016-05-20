@@ -31,9 +31,21 @@ Examples
 
 #### Basic
 
-[Basic](https://github.com/newlandsvalley/elm-soundfont-ports/tree/master/src/examples/basic) just tests the basic functionality of the soundfont port 'library'.
+[Basic](https://github.com/newlandsvalley/elm-soundfont-ports/tree/master/examples/src/basic) just tests the basic functionality of the soundfont port 'library'.
+
+To build, cd to examples amd run:
+
+./compile.sh
+
+To run, use basic.html
 
 #### MIDI File
 
-[Simpleplayer](https://github.com/newlandsvalley/elm-soundfont-ports/tree/master/src/examples/simpleplayer) is a simple MIDI file player (it plays a Swedish tune called 'Lillasystern').  It provides options for loading the acoustic grand piano soundfont, and loading and parsing the MIDI file. It converts this into a performance simply by accumulating the elapsed times of each 'NoteOn' event. It then simply passes this to the javascript port so that it can be played using web-audio. The player can be used with any type of MIDI file, but for multi-track input only the first melody track will be played. 
+[Simpleplayer](https://github.com/newlandsvalley/elm-soundfont-ports/tree/master/examples/src/simpleplayer) is a simple MIDI file player (it plays a Swedish tune called 'Lillasystern').  It provides options for loading the acoustic grand piano soundfont, and loading and parsing the MIDI file. It converts this into a performance simply by accumulating the elapsed times of each 'NoteOn' event. It then simply passes this to the javascript port so that it can be played using web-audio. The player can be used with any type of MIDI file, but for multi-track input only the first melody track will be played. 
+
+To build, cd to examples amd run:
+
+./compilesp.sh
+
+To run, use simpleplayer.html
 
