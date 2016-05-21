@@ -7,7 +7,7 @@ type Msg =
   | ResponseAudioContext AudioContext
   | RequestOggEnabled
   | ResponseOggEnabled Bool
-  | RequestLoadFonts
+  | RequestLoadFonts String
   | ResponseFontsLoaded Bool
   | RequestPlayNote MidiNote
   | RequestPlayNoteSequence MidiNotes

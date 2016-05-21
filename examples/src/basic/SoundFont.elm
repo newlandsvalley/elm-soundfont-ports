@@ -44,9 +44,9 @@ update msg model =
       ( { model | oggEnabled = enabled }
       , Cmd.none
       )
-    RequestLoadFonts ->
+    RequestLoadFonts dir ->
       ( model
-      , requestLoadFonts ()
+      , requestLoadFonts dir
       )
     ResponseFontsLoaded loaded ->
       ( { model | fontsLoaded = loaded }
@@ -119,7 +119,7 @@ viewLoadFontButton model =
     Just ac ->
       button
         [
-          onClick RequestLoadFonts
+          onClick (RequestLoadFonts "soundfonts")
         , id "elm-load-font-button"
         , btnStyle
         ] [ text "load soundfonts" ]

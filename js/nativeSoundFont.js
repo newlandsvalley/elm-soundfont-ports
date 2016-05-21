@@ -14,16 +14,17 @@ function detectOggEnabled() {
 
 myapp.ports.requestLoadFonts.subscribe(loadSoundFonts);
 
-function loadSoundFonts() {
+function loadSoundFonts(dirname) {
     myapp.context = getAudioContext();
-    name = 'acoustic_grand_piano'
+    var name = 'acoustic_grand_piano'
+    var dir = dirname + '/'
     if (canPlayOgg()) {
       extension = '-ogg.js'
     }
     else {
       extension = '-mp3.js'
     }    
-    Soundfont.nameToUrl = function (name) { return 'soundfonts/' + name + extension }
+    Soundfont.nameToUrl = function (name) { return dir + name + extension }
     Soundfont.loadBuffers(myapp.context, name)
         .then(function (buffers) {
           console.log("buffers:", buffers)

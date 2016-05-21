@@ -9,7 +9,7 @@ port initialiseAudioContext : () -> Cmd msg
 
 port requestIsOggEnabled : () -> Cmd msg
 
-port requestLoadFonts : () -> Cmd msg
+port requestLoadFonts : String -> Cmd msg
 
 port requestPlayNote : MidiNote -> Cmd msg
 

@@ -38,7 +38,7 @@ init =
 type Msg =
     InitialiseAudioContext
   | InitialisedAudioContext AudioContext
-  | RequestLoadFonts
+  | RequestLoadFonts String
   | FontsLoaded Bool
   | LoadMidi String
   | Midi (Result String MidiPerformance )
@@ -58,9 +58,9 @@ update msg model =
       ( { model | audioContext = Just context }
       , Cmd.none
       )
-    RequestLoadFonts ->
+    RequestLoadFonts dir ->
       ( model
-      , requestLoadFonts ()
+      , requestLoadFonts dir
       )
     FontsLoaded loaded ->
       ( { model | fontsLoaded = loaded }
@@ -109,7 +109,7 @@ view model =
     [ 
       button 
         [ 
-          onClick RequestLoadFonts
+          onClick (RequestLoadFonts "soundfonts")
         , btnStyle 
         ] [ text "load fonts" ]
     , button 
