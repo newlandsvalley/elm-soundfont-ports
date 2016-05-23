@@ -18,6 +18,11 @@ fontsLoadedSub : Sub Msg
 fontsLoadedSub  =
   fontsLoaded ResponseFontsLoaded
 
+playSequenceStartedSub : Sub Msg
+playSequenceStartedSub  =
+  playSequenceStarted ResponsePlaySequenceStarted
+
+
 
 
 

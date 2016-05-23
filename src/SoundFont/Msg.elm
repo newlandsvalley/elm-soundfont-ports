@@ -11,6 +11,7 @@ type Msg =
   | ResponseFontsLoaded Bool
   | RequestPlayNote MidiNote
   | RequestPlayNoteSequence MidiNotes
+  | ResponsePlaySequenceStarted Bool
   | NoOp
 
 

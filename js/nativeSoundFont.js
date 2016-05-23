@@ -37,16 +37,18 @@ myapp.ports.requestPlayNote.subscribe(playMidiNote);
 
 /* play a midi note */
 function playMidiNote(midiNote) {
-  console.log("playing buffer at time: " + midiNote.timeOffset + " with gain: " + midiNote.gain + " for note: " + midiNote.id)
-  var buffer = myapp.buffers[midiNote.id]
-  var source = myapp.context.createBufferSource();
-  var gainNode = myapp.context.createGain();
-  var time = myapp.context.currentTime + midiNote.timeOffset;
-  gainNode.gain.value = midiNote.gain;
-  source.buffer = buffer;
-  source.connect(gainNode);
-  gainNode.connect(myapp.context.destination)
-  source.start(time);
+  if (myapp.buffers) { 
+    console.log("playing buffer at time: " + midiNote.timeOffset + " with gain: " + midiNote.gain + " for note: " + midiNote.id)
+    var buffer = myapp.buffers[midiNote.id]
+    var source = myapp.context.createBufferSource();
+    var gainNode = myapp.context.createGain();
+    var time = myapp.context.currentTime + midiNote.timeOffset;
+    gainNode.gain.value = midiNote.gain;
+    source.buffer = buffer;
+    source.connect(gainNode);
+    gainNode.connect(myapp.context.destination)
+    source.start(time);
+  }
 };
 
 myapp.ports.requestPlayNoteSequence.subscribe(playMidiNoteSequence);
@@ -54,7 +56,13 @@ myapp.ports.requestPlayNoteSequence.subscribe(playMidiNoteSequence);
 /* play a sequence of midi notes */
 function playMidiNoteSequence(midiNotes) {
   console.log("play sequence");
-  midiNotes.map(playMidiNote);
+  if (myapp.buffers) { 
+    midiNotes.map(playMidiNote);
+    myapp.ports.playSequenceStarted.send(true);
+  }
+  else {
+    myapp.ports.playSequenceStarted.send(false);
+  }
 }
 
 /* IMPLEMENTATION */
