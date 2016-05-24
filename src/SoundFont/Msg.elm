@@ -10,6 +10,7 @@ type Msg =
   | RequestLoadFonts String
   | ResponseFontsLoaded Bool
   | RequestPlayNote MidiNote
+  | ResponsePlayedNote Bool
   | RequestPlayNoteSequence MidiNotes
   | ResponsePlaySequenceStarted Bool
   | NoOp

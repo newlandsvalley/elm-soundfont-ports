@@ -29,6 +29,9 @@ port oggEnabled : (Bool -> msg) -> Sub msg
 {-| Have the soundfonts been loaded OK? -}
 port fontsLoaded : (Bool -> msg) -> Sub msg
 
+{-| Have we played the individual note? -}
+port playedNote : (Bool -> msg) -> Sub msg
+
 {-| Have we started to play the note sequence? -}
 port playSequenceStarted : (Bool -> msg) -> Sub msg
 

@@ -20,11 +20,12 @@ type alias Model =
     audioContext : Maybe AudioContext
   , oggEnabled : Bool
   , fontsLoaded : Bool
+  , playedNote : Bool
   , canPlaySequence : Bool
   }
 
 init =
-  Model Nothing False False False
+  Model Nothing False False False False
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -57,6 +58,10 @@ update msg model =
       ( model
       , requestPlayNote note
       )
+    ResponsePlayedNote played ->
+      ( { model | playedNote = played }
+      , Cmd.none
+      )
     RequestPlayNoteSequence notes ->
       ( model
       , requestPlayNoteSequence notes
@@ -72,7 +77,12 @@ update msg model =
 -- SUBSCRIPTIONS
 subscriptions : Model -> Sub Msg
 subscriptions model
-  = Sub.batch [audioContextSub, oggEnabledSub, fontsLoadedSub, playSequenceStartedSub]
+  = Sub.batch [ audioContextSub
+              , oggEnabledSub
+              , fontsLoadedSub
+              , playedNoteSub
+              , playSequenceStartedSub
+              ]
 
 -- VIEW
 
@@ -93,13 +103,20 @@ viewEnabled m =
         "yes"
       else
         "no"
+    played = 
+      if (m.playedNote) then
+        "yes"
+      else
+        "no"
     canPlay = 
       if (m.canPlaySequence) then
         "yes"
       else
         "no"
   in
-     text ("audio enabled: " ++ audio ++ " ogg enabled: " ++ ogg ++ " fonts loaded: " ++ fonts ++ " can play sequence: " ++ canPlay )
+     text ("audio enabled: " ++ audio ++ " ogg enabled: " ++ 
+            ogg ++ " fonts loaded: " ++ fonts ++ " played note: " ++ 
+            played ++ " can play sequence: " ++ canPlay )
 
 
 view : Model -> Html Msg

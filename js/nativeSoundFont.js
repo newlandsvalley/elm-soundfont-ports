@@ -33,29 +33,20 @@ function loadSoundFonts(dirname) {
         })
 }
 
-myapp.ports.requestPlayNote.subscribe(playMidiNote);
+myapp.ports.requestPlayNote.subscribe(playNote);
 
 /* play a midi note */
-function playMidiNote(midiNote) {
-  if (myapp.buffers) { 
-    console.log("playing buffer at time: " + midiNote.timeOffset + " with gain: " + midiNote.gain + " for note: " + midiNote.id)
-    var buffer = myapp.buffers[midiNote.id]
-    var source = myapp.context.createBufferSource();
-    var gainNode = myapp.context.createGain();
-    var time = myapp.context.currentTime + midiNote.timeOffset;
-    gainNode.gain.value = midiNote.gain;
-    source.buffer = buffer;
-    source.connect(gainNode);
-    gainNode.connect(myapp.context.destination)
-    source.start(time);
-  }
-};
+function playNote(midiNote) {
+  var res = playMidiNote(midiNote); 
+  myapp.ports.playedNote.send(res);
+}
+
 
 myapp.ports.requestPlayNoteSequence.subscribe(playMidiNoteSequence);
 
 /* play a sequence of midi notes */
 function playMidiNoteSequence(midiNotes) {
-  console.log("play sequence");
+  /* console.log("play sequence"); */
   if (myapp.buffers) { 
     midiNotes.map(playMidiNote);
     myapp.ports.playSequenceStarted.send(true);
@@ -84,3 +75,24 @@ canPlayOgg = function() {
     return false;
   }
 }
+
+/* play a midi note */
+function playMidiNote(midiNote) {
+  if (myapp.buffers) { 
+    /* console.log("playing buffer at time: " + midiNote.timeOffset + " with gain: " + midiNote.gain + " for note: " + midiNote.id) */
+    var buffer = myapp.buffers[midiNote.id]
+    var source = myapp.context.createBufferSource();
+    var gainNode = myapp.context.createGain();
+    var time = myapp.context.currentTime + midiNote.timeOffset;
+    gainNode.gain.value = midiNote.gain;
+    source.buffer = buffer;
+    source.connect(gainNode);
+    gainNode.connect(myapp.context.destination)
+    source.start(time);
+    return true;
+  }
+  else {
+    return false;
+  }
+};
+
