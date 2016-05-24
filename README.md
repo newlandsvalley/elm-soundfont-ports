@@ -37,11 +37,13 @@ Examples
 
 [basic](https://github.com/newlandsvalley/elm-soundfont-ports/tree/master/examples/src/basic) just tests the basic functionality of the soundfont port 'library'.
 
-To build, cd to examples amd run:
+To build, cd to examples and run:
 
-./compile.sh
+    ./compile.sh
 
-To run, use basic.html
+To run, use:
+
+    basic.html
 
 #### MIDI File
 
@@ -49,9 +51,11 @@ To run, use basic.html
 
 To build, cd to examples amd run:
 
-./compilesp.sh
+    ./compilesp.sh
 
-To run, use simpleplayer.html
+To run, use:
+
+    simpleplayer.html
 
 #### MIDI Audio Controller
 
@@ -59,9 +63,11 @@ To run, use simpleplayer.html
 
 To build, cd to examples amd run:
 
-./compilecp.sh
+    ./compilecp.sh
 
-To run, use controlledplayer.html
+To run, use:
+
+    controlledplayer.html
 
 Issues
 ------
