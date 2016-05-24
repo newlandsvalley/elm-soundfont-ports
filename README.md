@@ -21,12 +21,14 @@ The main problem with ports is that they're not really capable of producing a sh
 
 A further problem is that elm's custom and borders protection prevents you from smuggling some data types from javascript that you really need - particularly binary types for which there's no support in elm.  This means (for example) you cannot have a complete AudioBuffer node in elm and pass it back through a port to javascript later.  This in turn means that much of your functionality has to be pushed down into the javascript layer.
 
+As was the case with commands resulting from tasks, outgoing ports have a time penalty associated with them.  This can make it difficult in an audio application to synchronize the sound as you expect it.
+
 Finally, whereas Tasks compose - you can say, for example, Task a `andThen` Task b, commands (which wrap outgoing port requests) don't.  All you can do with a command is to request that the elm runtime executes it.
 
 Advantages of Ports
 -------------------
 
-On the other hand, you do not have to use Tasks in order to play sounds. This probably means that the code executes more quickly.  It certainly means that the elm code is simpler. 
+On the other hand, you do not have to use Tasks in order to play sounds. This, perhaps,  means that the elm code is simpler in many cases. 
 
 Examples
 --------
