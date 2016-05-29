@@ -20,10 +20,11 @@ import Array exposing (get)
 import String exposing (..)
 import Result exposing (Result)
 import Process exposing (sleep)
-import CoMidi exposing (MidiRecording, MidiEvent(..), normalise, parse)
+import CoMidi exposing (normalise, parse)
+import MidiTypes exposing (MidiEvent(..), MidiRecording)
 import SoundFont.Ports exposing (..)
 import SoundFont.Types exposing (..)
-import MidiTrack0 exposing (..)
+import MidiTrack exposing (..)
 
 import Debug exposing (..) 
 
@@ -51,7 +52,7 @@ type alias PlaybackState =
 type alias Model =
     { 
       fontsLoaded : Bool
-    , track0 : Result String MidiTrack0
+    , track0 : Result String MidiTrack
     , playbackState : PlaybackState
     }
 
@@ -61,8 +62,8 @@ elmPlayerOverhead = 0.872
 -- elmPlayerOverhead = 0.923
     
 -- let's use this to mark the end of a track or a track in error we can't play
-endOfTrack : CoMidi.MidiEvent
-endOfTrack = CoMidi.Text "EndOfTrack"
+endOfTrack : MidiTypes.MidiEvent
+endOfTrack = MidiTypes.Text "EndOfTrack"
 
 init : Model
 init =
@@ -83,7 +84,7 @@ type Msg
     = NoOp   
     | FontsLoaded Bool                  -- response that soundfonts have been loaded
     | LoadMidi String                   -- request to load the MIDI file
-    | Midi (Result String MidiTrack0 )  -- response that the MIDI file has been loaded
+    | Midi (Result String MidiTrack )  -- response that the MIDI file has been loaded
     | Step                              -- step to the next event in the MIDI recording
     | Play MidiNote                     -- request to play a single note
     | PlayedNote Bool                   -- response that the note has been played
@@ -186,7 +187,7 @@ loadMidi url =
 {- get the next event - if we have a recording result from parsing the midi file, convert
    the next indexed midi event to a delayed action (perhaps a NoteOn sound)
 -}
-nextEvent :  PlaybackState -> Result String MidiTrack0 -> SoundEvent
+nextEvent :  PlaybackState -> Result String MidiTrack -> SoundEvent
 nextEvent state track0Result = 
      case track0Result of
        Ok track0 ->
@@ -262,7 +263,7 @@ stepState soundEvent state =
       _ = log "sound event" soundEvent.event
     in
       case soundEvent.event of
-        CoMidi.Text t ->
+        MidiTypes.Text t ->
           if (t == "EndOfTrack") then      
             ({ state | playing = False, noteOnSequence = False }, Nothing)
           else 
@@ -315,11 +316,11 @@ extractResponse result = case result of
     Err e -> Err "unexpected http error"
 
 {- extract track zero from the midi recording -}
-toTrack0 : Result String MidiRecording -> Result String MidiTrack0
+toTrack0 : Result String MidiRecording -> Result String MidiTrack
 toTrack0 r = Result.map fromRecording r
 
 
-parseLoadedFile : Result String Value -> Result String MidiTrack0
+parseLoadedFile : Result String Value -> Result String MidiTrack
 parseLoadedFile r = case r of
   Ok text -> case text of
     Http.Text s -> s |> normalise |> parse |> toTrack0
@@ -329,7 +330,7 @@ parseLoadedFile r = case r of
 -- VIEW
 
 {- view the result - just for debug purposes -}
-viewRecordingResult : Result String MidiTrack0 -> String
+viewRecordingResult : Result String MidiTrack -> String
 viewRecordingResult mr = 
    case mr of
       Ok res -> 

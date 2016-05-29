@@ -16,7 +16,7 @@ module MidiPerformance exposing
 
 -}
 
-import CoMidi exposing (..)
+import MidiTypes exposing (..)
 import Maybe exposing (withDefault)
 
 type alias AccumulatedTime = Int
