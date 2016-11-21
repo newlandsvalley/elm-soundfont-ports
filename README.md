@@ -1,7 +1,7 @@
 elm-soundfont-ports
 ===================
 
-Migration of [elm-soundfont](https://github.com/newlandsvalley/elm-soundfont) to elm 0.17.
+Migration of [elm-soundfont](https://github.com/newlandsvalley/elm-soundfont) to elm 0.18.
 
 This is an experiment with using ports for an audio application. It maintains an array of audio buffers in javascript (one for each MIDI note) indexed by note number and supports  _requestPlayNote_ and _requestPlayNotes_ command via elm ports which allows you to play the note(s) if you know the MIDI note number.
 
@@ -10,7 +10,7 @@ The javascript is stolen unashamedly from the latest code from three of danigb's
 Libraries Used
 --------------
 
-*   Elm-comidi 1.0.2.  This is a parser for MIDI file images which uses the elm-combine parser combinator library. 
+*   Elm-comidi 2.1.2.  This is a parser for MIDI file images which uses the elm-combine parser combinator library. 
 
 *   SoundFont. For reasons explained below, this is not a true library but is packaged in such a way as to make it reasonably straightforward to be shared by different applications.  
 
@@ -47,7 +47,7 @@ To run, use:
 
 #### MIDI File
 
-[simpleplayer](https://github.com/newlandsvalley/elm-soundfont-ports/tree/master/examples/src/simpleplayer) is a simple MIDI file player (it plays a Swedish tune called 'Lillasystern').  It provides options for loading the acoustic grand piano soundfont, and loading and parsing the MIDI file. It converts this into a performance simply by accumulating the elapsed times of each 'NoteOn' event. It then simply passes this to the javascript port so that it can be played using web-audio. The player can be used with any type of MIDI file, but for multi-track input only the first melody track will be played. 
+[simpleplayer](https://github.com/newlandsvalley/elm-soundfont-ports/tree/master/examples/src/simpleplayer) is a simple MIDI file player (there is a Swedish tune called 'Lillasystern' in the midi directory).  It provides options for loading the acoustic grand piano soundfont, and loading and parsing a MIDI file. It converts this into a performance simply by accumulating the elapsed times of each 'NoteOn' event. It then simply passes this to the javascript port so that it can be played using web-audio. The player can be used with any type of MIDI file, but for multi-track input only the first melody track will be played. 
 
 To build, cd to examples amd run:
 
