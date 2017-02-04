@@ -51,7 +51,7 @@ init =
 type Msg
     = InitialiseAudioContext
     | InitialisedAudioContext AudioContext
-    | RequestLoadFonts String
+    | RequestLoadPianoFonts String
     | FontsLoaded Bool
     | RequestFileUpload
     | FileLoaded (Maybe Filespec)
@@ -76,9 +76,9 @@ update msg model =
             , Cmd.none
             )
 
-        RequestLoadFonts dir ->
+        RequestLoadPianoFonts dir ->
             ( model
-            , requestLoadFonts dir
+            , requestLoadPianoFonts dir
             )
 
         FontsLoaded loaded ->
@@ -151,7 +151,7 @@ view model =
     div []
         [ h1 [] [ text "MIDI file player" ]
         , button
-            [ onClick (RequestLoadFonts "soundfonts")
+            [ onClick (RequestLoadPianoFonts "soundfonts")
             , btnStyle
             ]
             [ text "load fonts" ]

@@ -31,7 +31,7 @@ import Debug exposing (..)
 
 main =
     Html.program
-        { init = ( init, requestLoadFonts "soundfonts" ), update = update, view = view, subscriptions = subscriptions }
+        { init = ( init, requestLoadPianoFonts "soundfonts" ), update = update, view = view, subscriptions = subscriptions }
 
 
 

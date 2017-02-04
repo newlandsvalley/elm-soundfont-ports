@@ -52,14 +52,19 @@ update msg model =
             , Cmd.none
             )
 
-        RequestLoadFonts dir ->
+        RequestLoadPianoFonts dir ->
             ( model
-            , requestLoadFonts dir
+            , requestLoadPianoFonts dir
             )
 
         ResponseFontsLoaded loaded ->
             ( { model | fontsLoaded = loaded }
             , Cmd.none
+            )
+
+        RequestLoadRemoteFonts instrument ->
+            ( model
+            , requestLoadRemoteFonts instrument
             )
 
         RequestPlayNote note ->
@@ -169,23 +174,39 @@ view model =
             , btnStyle
             ]
             [ text "check ogg enabled" ]
-        , viewLoadFontButton model
+        , viewLoadLocalFontButton model
+        , viewLoadRemoteFontButton model
         , viewPlayNoteButton model
         , viewPlayNoteSequenceButton model
         , div [] [ viewEnabled model ]
         ]
 
 
-viewLoadFontButton : Model -> Html Msg
-viewLoadFontButton model =
+viewLoadLocalFontButton : Model -> Html Msg
+viewLoadLocalFontButton model =
     case (model.audioContext) of
         Just ac ->
             button
-                [ onClick (RequestLoadFonts "soundfonts")
+                [ onClick (RequestLoadPianoFonts "soundfonts")
                 , id "elm-load-font-button"
                 , btnStyle
                 ]
-                [ text "load soundfonts" ]
+                [ text "load locaL piano soundfonts" ]
+
+        _ ->
+            div [] []
+
+
+viewLoadRemoteFontButton : Model -> Html Msg
+viewLoadRemoteFontButton model =
+    case (model.audioContext) of
+        Just ac ->
+            button
+                [ onClick (RequestLoadRemoteFonts "marimba")
+                , id "elm-load-font-button"
+                , btnStyle
+                ]
+                [ text "(or) load remote marimba soundfonts" ]
 
         _ ->
             div [] []

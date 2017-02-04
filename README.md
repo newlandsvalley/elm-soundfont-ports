@@ -10,7 +10,7 @@ The javascript is stolen unashamedly from the latest code from three of danigb's
 Libraries Used
 --------------
 
-*   Elm-comidi 2.1.2.  This is a parser for MIDI file images which uses the elm-combine parser combinator library. 
+*   Elm-comidi 2.2.0.  This is a parser for MIDI file images which uses the elm-combine parser combinator library. 
 
 *   SoundFont. For reasons explained below, this is not a true library but is packaged in such a way as to make it reasonably straightforward to be shared by different applications.  
 
